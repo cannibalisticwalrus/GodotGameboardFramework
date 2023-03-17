@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://du1bjwo08tqnc"]
+[gd_scene load_steps=9 format=3 uid="uid://du1bjwo08tqnc"]
 
 [ext_resource type="ArrayMesh" uid="uid://dj11f2psoqlle" path="res://Assets/Meshes/sm_Cube.res" id="1_gmcbl"]
 [ext_resource type="ArrayMesh" uid="uid://c3sfe5mhotgem" path="res://Assets/Meshes/sm_CubeHalf.res" id="2_bm1ap"]
+[ext_resource type="Material" uid="uid://38hpbccbfptq" path="res://Assets/Materials/M_Dirt.tres" id="2_m0tne"]
+[ext_resource type="Material" uid="uid://c38o67oh7ro4f" path="res://Assets/Materials/M_Grass.tres" id="3_fhwam"]
 [ext_resource type="ArrayMesh" uid="uid://b8lelvssp5jls" path="res://Assets/Meshes/sm_Ramp.res" id="3_xqcjv"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0lq4e"]
@@ -18,6 +20,8 @@ data = PackedVector3Array(-0.6413, -1, 1, -1, 1, 1, -0.6413, 1, 1, -0.6413, -1, 
 [node name="Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.37413)
 mesh = ExtResource("1_gmcbl")
+surface_material_override/0 = ExtResource("2_m0tne")
+surface_material_override/1 = ExtResource("3_fhwam")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube"]
 
@@ -25,7 +29,10 @@ mesh = ExtResource("1_gmcbl")
 shape = SubResource("ConcavePolygonShape3D_0lq4e")
 
 [node name="Cube_Half" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_m0tne")
 mesh = ExtResource("2_bm1ap")
+surface_material_override/0 = ExtResource("2_m0tne")
+surface_material_override/1 = ExtResource("3_fhwam")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_Half"]
 
@@ -34,8 +41,11 @@ shape = SubResource("ConcavePolygonShape3D_8373u")
 
 [node name="Ramp" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.43822)
+material_override = ExtResource("2_m0tne")
 mesh = ExtResource("3_xqcjv")
 skeleton = NodePath("../Cube_Half")
+surface_material_override/0 = ExtResource("2_m0tne")
+surface_material_override/1 = ExtResource("3_fhwam")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Ramp"]
 
