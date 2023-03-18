@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://du1bjwo08tqnc"]
+[gd_scene load_steps=10 format=3 uid="uid://du1bjwo08tqnc"]
 
 [ext_resource type="ArrayMesh" uid="uid://dj11f2psoqlle" path="res://Assets/Meshes/sm_Cube.res" id="1_gmcbl"]
 [ext_resource type="ArrayMesh" uid="uid://c3sfe5mhotgem" path="res://Assets/Meshes/sm_CubeHalf.res" id="2_bm1ap"]
 [ext_resource type="Material" uid="uid://38hpbccbfptq" path="res://Assets/Materials/M_Dirt.tres" id="2_m0tne"]
 [ext_resource type="Material" uid="uid://c38o67oh7ro4f" path="res://Assets/Materials/M_Grass.tres" id="3_fhwam"]
 [ext_resource type="ArrayMesh" uid="uid://b8lelvssp5jls" path="res://Assets/Meshes/sm_Ramp.res" id="3_xqcjv"]
+[ext_resource type="Material" uid="uid://buab5jrg83rlq" path="res://Assets/Materials/Selector.tres" id="6_txb27"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0lq4e"]
 data = PackedVector3Array(1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1, -1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1, 1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1)
@@ -51,3 +52,9 @@ surface_material_override/1 = ExtResource("3_fhwam")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ramp/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_4w2vp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+mesh = ExtResource("1_gmcbl")
+surface_material_override/0 = ExtResource("6_txb27")
+surface_material_override/1 = ExtResource("6_txb27")
