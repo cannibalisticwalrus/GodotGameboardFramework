@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c38o67oh7ro4f"]
+
+[ext_resource type="Texture2D" uid="uid://cnr5h4f8y6a5n" path="res://Assets/Textures/T_Grass.png" id="1_dnxbc"]
+
+[resource]
+shading_mode = 0
+diffuse_mode = 3
+albedo_texture = ExtResource("1_dnxbc")
+uv1_scale = Vector3(0.473, 0.473, 0.473)
+uv1_offset = Vector3(0.494, -0.015, 0.489)
+uv1_triplanar = true
+texture_filter = 2
+texture_repeat = false
