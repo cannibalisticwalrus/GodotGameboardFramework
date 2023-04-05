@@ -1,4 +1,5 @@
 extends Node3D
+class_name PlayerController;
 
 #VARIABLES
 @export var isDebugging:bool = false;
@@ -9,10 +10,7 @@ var down:bool = false;
 var right:bool = false;
 var left:bool = false;
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
+#FUNCTION FOR INPUT AND CLICK EVENTS
 func _input(event):	
 	#ZOOM
 	if event is InputEventMouseButton:
@@ -30,20 +28,18 @@ func _input(event):
 	#ROTATION
 	if event.is_action_pressed("RotateLeft"):
 		self.rotate(Vector3(0,1,0), PI/2);
-				#ROTATION WITH KEYBOARD
 	if event.is_action_pressed("RotateRight"):
 		self.rotate(Vector3(0,1,0), -PI/2);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#HANDLING ACTIONS
-	#SCROLL WITH KEYBOARD
+	#SCROLL STATUS
 	up=Input.is_action_pressed("Up");
 	left=Input.is_action_pressed("Left");
 	right=Input.is_action_pressed("Right");
 	down=Input.is_action_pressed("Down");
 	
-	#PROCESS SCROLL
+	#SCROLL
 	if up:
 		self.translate(Vector3(0,0,-SCROLL_SPEED*delta));
 	if down:
@@ -53,9 +49,11 @@ func _process(delta):
 	if right:
 		self.translate(Vector3(SCROLL_SPEED*delta,0,0));
 		
-	cursorLocation3d = ScreenPointToRay();
+	#SETS LOCATION OF CURSOR IN 3D
+	cursorLocation3d = _screenPointToRay();
 
-func ScreenPointToRay():
+#GET LOCATION OF CURSOR IN 3D
+func _screenPointToRay():
 	var spaceState = get_world_3d().direct_space_state
 	
 	var mousePosition = get_viewport().get_mouse_position();

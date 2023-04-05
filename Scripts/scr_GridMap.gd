@@ -1,17 +1,29 @@
 extends GridMap
 
+#VARIABLES
 @onready var playerClass = $"../Player"
 @onready var gameMode:int = 1; #0 = Edit Mode.  1 = Player Mode
-var activeCellLocation: Vector3i;
-var previousCellLocation: Vector3i = Vector3i(0,1000,0);
-	
+var activeCellLocation:Vector3i;
+var previousCellLocation:Vector3i = Vector3i(0,1000,0);
+var occupiedSquaresArray = [];
 
+#GAMEMODE SETTER/GETTER
 func setGameMode(gameMode:int):
 	self.gameMode = gameMode;
-
 func getGameMode() -> int:
-	return gameMode
+	return gameMode;
+	
+#OccupiedSquaresArray functions
+func getOccupiedSquares():
+	return occupiedSquaresArray;
+func addOccupiedSquares(squareLocation:Vector3i, squareOccupiedBy):
+	var locationDictionary = {squareLocation: squareOccupiedBy}
+	self.occupiedSquaresArray.append(locationDictionary);
+func removeOccupiedSquares(squareLocation:Vector3i):
+	self.occupiedSquaresArray.erase(squareLocation);
+	return;
 
+#Checks to see if the selector's location can be selected
 func isSelectorLocationValid(baseCellPosition:Vector3i, alternateCellPosition:Vector3i) -> bool:
 	#Is BaseCell in the GridMap
 	if (get_cell_item(baseCellPosition) < 0):
@@ -24,7 +36,7 @@ func isSelectorLocationValid(baseCellPosition:Vector3i, alternateCellPosition:Ve
 		return false;
 	return true;
 
-
+#Updates the current location of the gridMap selector in the Designer Mode
 func updateGridSelector():
 	#Gets the location of the cursor and its projection in 3d space
 	var cursorPosition:Vector3 = playerClass.cursorLocation3d;
@@ -52,6 +64,7 @@ func updateGridSelector():
 	#Spawn selector cell 1 layer above base at cursor
 	set_cell_item(selectorCellLocation,3);
 	
+#Tick function
 func _process(delta):
 	if gameMode==0:
 		updateGridSelector();
