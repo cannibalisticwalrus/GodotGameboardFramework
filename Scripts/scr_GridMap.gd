@@ -3,20 +3,20 @@ extends GridMap
 #VARIABLES
 @onready var gameModeClass = $".."
 @onready var playerClass = $"../Player"
-@onready var gameMode:int = 1; #0 = Edit Mode.  1 = Player Mode
+
 var activeCellLocation:Vector3i;
 var previousCellLocation:Vector3i = Vector3i(0,1000,0);
-var occupiedSquaresArray = [];
+
+var occupiedSquares;
 	
-#OccupiedSquaresArray functions
-func getOccupiedSquares():
-	return occupiedSquaresArray;
-func addOccupiedSquares(squareLocation:Vector3i, squareOccupiedBy):
-	var locationDictionary = {squareLocation: squareOccupiedBy}
-	self.occupiedSquaresArray.append(locationDictionary);
-func removeOccupiedSquares(squareLocation:Vector3i):
-	self.occupiedSquaresArray.erase(squareLocation);
-	return;
+##OccupiedSquaresArray functions
+#func getOccupiedSquares():
+#	return occupiedSquares;
+#func addOccupiedSquares(squareLocation:Vector3i, squareOccupiedBy):
+#	var locationDictionary = {squareLocation: squareOccupiedBy}
+#	occupiedSquares.append(locationDictionary);
+#func removeOccupiedSquares(squareLocation:Vector3i):
+#	occupiedSquares.erase(squareLocation);
 
 #Checks to see if the selector's location can be selected
 func isSelectorLocationValid(baseCellPosition:Vector3i, alternateCellPosition:Vector3i) -> bool:
