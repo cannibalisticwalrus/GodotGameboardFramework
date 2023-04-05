@@ -44,12 +44,12 @@ surface_material_override/0 = ExtResource("5_fb3rk")
 surface_material_override/1 = ExtResource("5_fb3rk")
 script = ExtResource("7_7mvs5")
 
-[node name="PlayerCharacter" type="CharacterBody3D" parent="Player"]
+[node name="PlayerCharacter" type="CharacterBody3D" parent="."]
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 1, 3.25, 1)
 script = ExtResource("8_m8wyj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/PlayerCharacter"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerCharacter"]
 mesh = SubResource("CapsuleMesh_cyuwt")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/PlayerCharacter"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerCharacter"]
 shape = SubResource("CapsuleShape3D_xfsae")

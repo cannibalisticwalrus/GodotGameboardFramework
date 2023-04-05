@@ -11,6 +11,7 @@ func _input(event):
 		var gridMapCellAtCursor = gridMap.local_to_map(player.cursorLocation3d);
 		if(isCurrentSelection):
 			isCurrentSelection = (gridMapCellAtCursor==currentSelectionLocation);
+			currentSelectionLocation=gridMapCellAtCursor;
 			return;
 		isCurrentSelection = true;
 
