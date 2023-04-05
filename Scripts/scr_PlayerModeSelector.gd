@@ -1,34 +1,37 @@
 extends MeshInstance3D
 class_name cursor_playerMode
 
-#VARIABLES
-var isVisible:bool = true;
-var moveToOffset:Vector3;
-var previousCursorGridPosition:Vector3i;
 @onready var gridMap:GridMap = $"../../GridMap";
-var isSelected:bool = false;
-var currentSelection:Node3D;
+@onready var player:Node3D = $"..";
+var isCurrentSelection:bool = false;
+var currentSelectionLocation:Vector3i;
 
-#Update the Location of the Selector while on player mode
+func _input(event):
+	if(event.is_action_pressed("SelectItem")):
+		var gridMapCellAtCursor = gridMap.local_to_map(player.cursorLocation3d);
+		if(isCurrentSelection):
+			isCurrentSelection = (gridMapCellAtCursor==currentSelectionLocation);
+			return;
+		isCurrentSelection = true;
+		print(isCurrentSelection);
+
+func _process(delta):
+	if(!isCurrentSelection):
+		updateSelectorLocation();
+	if(characterIsSelected()):
+		return; #displayCharacterMovementOptions(currentSelection);
+
 func updateSelectorLocation():
-	var cursorPosition:Vector3 = $"..".cursorLocation3d;
-	var currentSelectorPosition:Vector3
-	var gridMapCellAtCursor = gridMap.local_to_map(cursorPosition);
+	var gridMapCellAtCursor = gridMap.local_to_map(player.cursorLocation3d);
 	if (gridMap.get_cell_item(gridMapCellAtCursor)>=0):
 		var localLocationAtGridMapCell = gridMap.map_to_local(gridMapCellAtCursor);
 		var globalLocationAtGridMapCell = gridMap.to_global(localLocationAtGridMapCell);
 		self.global_position = globalLocationAtGridMapCell;
 
-func characterIsSelected() -> bool:
-	return (currentSelection && (currentSelection.get_class()=="playerCharacter"))
-	
+func characterIsSelected()->bool:
+	return false;
+
 func displayCharacterMovementOptions(aPlayerCharacter):
 	pass;
 
-#Tick Function
-func _process(delta):
-	updateSelectorLocation();
-	Input.is_action_pressed("Select");
-	if(characterIsSelected()):
-		displayCharacterMovementOptions(currentSelection);
-	
+
