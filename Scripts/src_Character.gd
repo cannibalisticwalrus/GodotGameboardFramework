@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name playerCharacter;
 
 #Character Stats from Pathfinder
 const pfSPEED:int = 25;
