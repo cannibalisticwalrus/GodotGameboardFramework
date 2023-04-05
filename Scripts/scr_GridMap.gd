@@ -1,17 +1,12 @@
 extends GridMap
 
 #VARIABLES
+@onready var gameModeClass = $".."
 @onready var playerClass = $"../Player"
 @onready var gameMode:int = 1; #0 = Edit Mode.  1 = Player Mode
 var activeCellLocation:Vector3i;
 var previousCellLocation:Vector3i = Vector3i(0,1000,0);
 var occupiedSquaresArray = [];
-
-#GAMEMODE SETTER/GETTER
-func setGameMode(gameMode:int):
-	self.gameMode = gameMode;
-func getGameMode() -> int:
-	return gameMode;
 	
 #OccupiedSquaresArray functions
 func getOccupiedSquares():
@@ -66,5 +61,5 @@ func updateGridSelector():
 	
 #Tick function
 func _process(delta):
-	if gameMode==0:
+	if (gameModeClass.getGameMode())==0:
 		updateGridSelector();

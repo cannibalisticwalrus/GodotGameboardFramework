@@ -7,3 +7,6 @@ extends Node3D
 ###########################################################
 
 var gameMode:int = 1; #Gamemode 0 - Level Designer; Gamemode 1 - Game Master; Gamemode 2 - Player
+
+func getGameMode():
+	return gameMode;
