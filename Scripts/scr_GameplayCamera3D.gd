@@ -1,8 +1,6 @@
 extends Node3D
 class_name PlayerController;
 
-#VARIABLES
-@export var isDebugging:bool = false;
 @export var cursorLocation3d:Vector3 = (Vector3(0,0,0));
 const SCROLL_SPEED = 15;
 var up:bool = false;
@@ -10,36 +8,26 @@ var down:bool = false;
 var right:bool = false;
 var left:bool = false;
 
-#FUNCTION FOR INPUT AND CLICK EVENTS
 func _input(event):	
-	#ZOOM
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			#ZOOM IN
 			if event.button_index==MOUSE_BUTTON_WHEEL_DOWN:
 				if $Camera3D.size<35:
 					$Camera3D.size+=0.5;
-			
-			#ZOOM OUT
 			if event.button_index==MOUSE_BUTTON_WHEEL_UP:
 				if $Camera3D.size>10:
 					$Camera3D.size-=.5;
-	
-	#ROTATION
 	if event.is_action_pressed("RotateLeft"):
 		self.rotate(Vector3(0,1,0), PI/2);
 	if event.is_action_pressed("RotateRight"):
 		self.rotate(Vector3(0,1,0), -PI/2);
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+		
 func _process(delta):
-	#SCROLL STATUS
 	up=Input.is_action_pressed("Up");
 	left=Input.is_action_pressed("Left");
 	right=Input.is_action_pressed("Right");
 	down=Input.is_action_pressed("Down");
-	
-	#SCROLL
+
 	if up:
 		self.translate(Vector3(0,0,-SCROLL_SPEED*delta));
 	if down:
@@ -49,10 +37,8 @@ func _process(delta):
 	if right:
 		self.translate(Vector3(SCROLL_SPEED*delta,0,0));
 		
-	#SETS LOCATION OF CURSOR IN 3D
 	cursorLocation3d = _screenPointToRay();
 
-#GET LOCATION OF CURSOR IN 3D
 func _screenPointToRay():
 	var spaceState = get_world_3d().direct_space_state
 	
