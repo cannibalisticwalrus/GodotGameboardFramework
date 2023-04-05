@@ -13,7 +13,6 @@ func _input(event):
 			isCurrentSelection = (gridMapCellAtCursor==currentSelectionLocation);
 			return;
 		isCurrentSelection = true;
-		print(isCurrentSelection);
 
 func _process(delta):
 	if(!isCurrentSelection):
