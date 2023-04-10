@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk4rohtdhu245"]
+
+[ext_resource type="Script" path="res://Scenes/SelectorMesh_spawnling.gd" id="1_4aotc"]
+[ext_resource type="ArrayMesh" uid="uid://bl8tkfghjhxfq" path="res://Assets/Meshes/sm_CubeSelector.res" id="1_fujtb"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_4aotc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_fujtb")
