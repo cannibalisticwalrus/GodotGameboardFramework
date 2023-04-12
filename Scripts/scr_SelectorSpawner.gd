@@ -23,10 +23,8 @@ func selectAtCurrentLocation()->void:
 		isCurrentSelection = true;
 		currentSelectionLocation=gridMapCellAtCursor;
 		var returnArray = []
-		returnArray = gridMap.getGridCellsInRange(5, gridMapCellAtCursor, returnArray);
-		print(returnArray);
+		returnArray = gridMap.getGridCellsInRange(2, gridMapCellAtCursor);
 		for availableCell in returnArray:
-			print("Creating cube at: ", availableCell);
 			var localLocationAtGridMapCell = gridMap.map_to_local(availableCell);
 			var globalLocationAtGridMapCell = gridMap.to_global(localLocationAtGridMapCell);
 			spawnAtLocation(globalLocationAtGridMapCell);
