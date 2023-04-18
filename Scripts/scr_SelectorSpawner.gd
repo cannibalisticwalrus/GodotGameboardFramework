@@ -11,6 +11,8 @@ var currentSelectionLocation:Vector3i;
 
 func selectAtCurrentLocation()->void:
 	var gridMapCellAtCursor = gridMap.local_to_map(player.cursorLocation3d);
+	if($"../../../Node3D".getDebugMode()>0):
+		print("Selector selected: ", gridMapCellAtCursor);
 	
 	#If there is a current selection, unlock the cursor if user clicked off it
 	if(isCurrentSelection):
@@ -23,7 +25,7 @@ func selectAtCurrentLocation()->void:
 		isCurrentSelection = true;
 		currentSelectionLocation=gridMapCellAtCursor;
 		var returnArray = []
-		returnArray = gridMap.getGridCellsInRange(2, gridMapCellAtCursor);
+		returnArray = gridMap.getGridCellsInRange(5, gridMapCellAtCursor);
 		for availableCell in returnArray:
 			var localLocationAtGridMapCell = gridMap.map_to_local(availableCell);
 			var globalLocationAtGridMapCell = gridMap.to_global(localLocationAtGridMapCell);

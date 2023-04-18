@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dk4rohtdhu245"]
+[gd_scene load_steps=4 format=3 uid="uid://dk4rohtdhu245"]
 
 [ext_resource type="Script" path="res://Scenes/SelectorMesh_spawnling.gd" id="1_4aotc"]
 [ext_resource type="ArrayMesh" uid="uid://bl8tkfghjhxfq" path="res://Assets/Meshes/sm_CubeSelector.res" id="1_fujtb"]
+[ext_resource type="Material" uid="uid://bdtxrtrheu3f3" path="res://Assets/Materials/M_GamplaySelector.tres" id="3_odbo0"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_4aotc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_fujtb")
+surface_material_override/0 = ExtResource("3_odbo0")
+surface_material_override/1 = ExtResource("3_odbo0")

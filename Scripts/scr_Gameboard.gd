@@ -30,15 +30,27 @@ func getValidAdjacentGridCells(startingLocation:Vector3i)->Array:
 	var adjacentGridCells := [];
 	
 	var xPlus1 := Vector3i(startingLocation.x+1,startingLocation.y,startingLocation.z);
-	if get_cell_item(xPlus1)>=0:
+	var oneUp := Vector3i(xPlus1.x, xPlus1.y+1, xPlus1.z)
+	
+	if get_cell_item(oneUp)>=0:
+		var twoUp := Vector3i(oneUp.x, oneUp.y+1, oneUp.z)
+		if !get_cell_item(twoUp)>=0:
+			adjacentGridCells.append(oneUp);
+	elif get_cell_item(xPlus1)>=0:
 		adjacentGridCells.append(xPlus1);
 	else:
-		var oneDown = Vector3i(xPlus1.x, xPlus1.y-1, xPlus1.z);
+		var oneDown := Vector3i(xPlus1.x, xPlus1.y-1, xPlus1.z);
 		if get_cell_item(oneDown)>=0:
 			adjacentGridCells.append(oneDown);
 	
 	var xMinus1 := Vector3i(startingLocation.x-1,startingLocation.y,startingLocation.z);
-	if get_cell_item(xMinus1)>=0:
+	oneUp = Vector3i(xPlus1.x, xPlus1.y+1, xPlus1.z)
+	
+	if get_cell_item(oneUp)>=0:
+		var twoUp := Vector3i(oneUp.x, oneUp.y+1, oneUp.z)
+		if !get_cell_item(twoUp)>=0:
+			adjacentGridCells.append(oneUp);
+	elif get_cell_item(xMinus1)>=0:
 		adjacentGridCells.append(xMinus1);
 	else:
 		var oneDown = Vector3i(xMinus1.x, xMinus1.y-1, xMinus1.z);
@@ -46,7 +58,13 @@ func getValidAdjacentGridCells(startingLocation:Vector3i)->Array:
 			adjacentGridCells.append(oneDown);
 	
 	var zPlus1 := Vector3i(startingLocation.x,startingLocation.y,startingLocation.z+1);
-	if get_cell_item(zPlus1)>=0:
+	oneUp = Vector3i(xPlus1.x, xPlus1.y+1, xPlus1.z)
+	
+	if get_cell_item(oneUp)>=0:
+		var twoUp := Vector3i(oneUp.x, oneUp.y+1, oneUp.z)
+		if !get_cell_item(twoUp)>=0:
+			adjacentGridCells.append(oneUp);
+	elif get_cell_item(zPlus1)>=0:
 		adjacentGridCells.append(zPlus1);
 	else:
 		var oneDown = Vector3i(zPlus1.x, zPlus1.y-1, zPlus1.z);
@@ -54,7 +72,13 @@ func getValidAdjacentGridCells(startingLocation:Vector3i)->Array:
 			adjacentGridCells.append(oneDown);
 	
 	var zMinus1 := Vector3i(startingLocation.x,startingLocation.y,startingLocation.z-1);
-	if get_cell_item(zMinus1)>=0:
+	oneUp = Vector3i(xPlus1.x, xPlus1.y+1, xPlus1.z)
+	
+	if get_cell_item(oneUp)>=0:
+		var twoUp := Vector3i(oneUp.x, oneUp.y+1, oneUp.z)
+		if !get_cell_item(twoUp)>=0:
+			adjacentGridCells.append(oneUp);
+	elif get_cell_item(zMinus1)>=0:
 		adjacentGridCells.append(zMinus1);
 	else:
 		var oneDown = Vector3i(zMinus1.x, zMinus1.y-1, zMinus1.z);
@@ -69,5 +93,4 @@ func getDistanceBetweenCells(gridLocation1:Vector3i, gridLocation2:Vector3i)->in
 	var yDistance = abs(gridLocation2.y - gridLocation1.y);
 	var zDistance = abs(gridLocation2.z - gridLocation1.z);
 	distanceBetweenCells = xDistance+yDistance+zDistance;
-	print(distanceBetweenCells);
 	return distanceBetweenCells;
