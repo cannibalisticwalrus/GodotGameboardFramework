@@ -1,10 +1,41 @@
 extends GridMap
 class_name GameBoard;
 
-var occupiedGridCells := {};
+var _occupiedGridCells := {};
 
-func getOccupiedGridCells()->Dictionary:
-	return occupiedGridCells;
+func isGridCellOccupiedAtLocation(location:Vector3i) -> bool:
+	return _occupiedGridCells.has(location);
+
+func updatePawnLocation(oldLocation:Vector3i, newLocation:Vector3i)->void:
+	if($"..".getGameMode()>0):
+		_debugGamemapOccupiedCells()
+	if(!isLocationValid(newLocation)):
+		print("Gameboard: Location does not exist");
+		return;
+	if !isGridCellOccupiedAtLocation(oldLocation):
+		print("Gameboard: There is nothing at the initial location");
+		return;
+	if isGridCellOccupiedAtLocation(newLocation):
+		print("Gameboard: Something is already there");
+		return;
+	_occupiedGridCells[newLocation] = _occupiedGridCells[oldLocation];
+	_occupiedGridCells.erase(oldLocation);
+	if($"..".getGameMode()>0):
+		_debugGamemapOccupiedCells()
+	return;
+	
+func addPawnAtLocation(pawnToAdd:Node3D, location:Vector3i)->void:
+	if(isLocationValid(location) && !isGridCellOccupiedAtLocation(location)):
+		_occupiedGridCells[location] = pawnToAdd;
+	return;
+
+func isLocationValid(location:Vector3i) -> bool:
+	return get_cell_item(location)>=0;
+
+func _debugGamemapOccupiedCells():
+	print("---Gameboard---");
+	print(_occupiedGridCells);
+	print("---------------");
 
 func getGridCellsInRange(distanceFromCenter:int, startingGridLocation:Vector3i)->Array:
 	if($"../../Node3D".getDebugMode()>0):
@@ -94,3 +125,9 @@ func getDistanceBetweenCells(gridLocation1:Vector3i, gridLocation2:Vector3i)->in
 	var zDistance = abs(gridLocation2.z - gridLocation1.z);
 	distanceBetweenCells = xDistance+yDistance+zDistance;
 	return distanceBetweenCells;
+
+func _ready():
+	if($"..".getGameMode()>0):
+		_occupiedGridCells[Vector3i(0,0,0)] = "CHARACTER1";
+		_debugGamemapOccupiedCells()
+		
