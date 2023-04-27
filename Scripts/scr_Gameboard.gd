@@ -5,7 +5,10 @@ var _occupiedGridCells := {};
 
 func isGridCellOccupiedAtLocation(location:Vector3i) -> bool:
 	return _occupiedGridCells.has(location);
-
+	
+func getPawnAtGridSquare(location:Vector3i) -> playerCharacter:
+	return _occupiedGridCells.get(location);
+	
 func updatePawnLocation(oldLocation:Vector3i, newLocation:Vector3i)->void:
 	if($"..".getGameMode()>0):
 		_debugGamemapOccupiedCells()
@@ -20,6 +23,7 @@ func updatePawnLocation(oldLocation:Vector3i, newLocation:Vector3i)->void:
 		return;
 	_occupiedGridCells[newLocation] = _occupiedGridCells[oldLocation];
 	_occupiedGridCells.erase(oldLocation);
+	_occupiedGridCells[newLocation].moveCharacter(getGlobalLocationOfLocalCell(Vector3i(newLocation.x,newLocation.y+1,newLocation.z)));
 	if($"..".getGameMode()>0):
 		_debugGamemapOccupiedCells()
 	return;
@@ -126,8 +130,16 @@ func getDistanceBetweenCells(gridLocation1:Vector3i, gridLocation2:Vector3i)->in
 	distanceBetweenCells = xDistance+yDistance+zDistance;
 	return distanceBetweenCells;
 
+func getGlobalLocationOfLocalCell(cell:Vector3i) -> Vector3:
+	var localLocationAtGridMapCell = self.map_to_local(cell);
+	var globalLocationAtGridMapCell = self.to_global(localLocationAtGridMapCell);
+	return globalLocationAtGridMapCell;
+
 func _ready():
 	if($"..".getGameMode()>0):
-		_occupiedGridCells[Vector3i(0,0,0)] = "CHARACTER1";
+		_occupiedGridCells[Vector3i(0,0,0)] = $"../CharacterToken";
+		_occupiedGridCells[Vector3i(-1,0,0)]= $"../CharacterToken2";
+		_occupiedGridCells[Vector3i(-2,0,0)]= $"../CharacterToken3";
+		
 		_debugGamemapOccupiedCells()
 		
