@@ -22,7 +22,7 @@ func _input(event):
 	if event.is_action_pressed("RotateRight"):
 		self.rotate(Vector3(0,1,0), -PI/2);
 	if event.is_action_pressed("SelectItem"):
-		$"../Selector/MainSelector".selectAtCurrentLocation();
+		$"../Selector".selectAtCurrentLocation();
 		
 func _process(delta):
 	up=Input.is_action_pressed("Up");
