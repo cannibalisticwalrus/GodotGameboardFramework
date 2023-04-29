@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4jrymenv00qu"]
+[gd_scene load_steps=11 format=3 uid="uid://b4jrymenv00qu"]
 
 [ext_resource type="MeshLibrary" uid="uid://binneyklhoj26" path="res://Assets/Libraries/ml_Basics.tres" id="1_b4xvv"]
 [ext_resource type="Script" path="res://Scripts/src_GameMode.gd" id="1_oyg00"]
@@ -8,12 +8,8 @@
 [ext_resource type="Material" uid="uid://bdtxrtrheu3f3" path="res://Assets/Materials/M_GamplaySelector.tres" id="5_fb3rk"]
 [ext_resource type="Script" path="res://Scripts/scr_SelectorSpawner.gd" id="7_88rtq"]
 [ext_resource type="PackedScene" uid="uid://dk4rohtdhu245" path="res://Scenes/SelectorMesh_spawnling.tscn" id="8_ivdng"]
-[ext_resource type="Script" path="res://Scripts/src_Character.gd" id="8_m8wyj"]
 [ext_resource type="Script" path="res://Scenes/Spawner.gd" id="9_8lnrv"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_cyuwt"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xfsae"]
+[ext_resource type="PackedScene" uid="uid://58dy075s6hg6" path="res://Scenes/character_token.tscn" id="10_q7gl3"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_oyg00")
@@ -25,6 +21,22 @@ data = {
 }
 script = ExtResource("3_xsrmb")
 metadata/_editor_floor_ = Vector3(-4, 2, 0)
+
+[node name="CharacterToken" parent="GridMap" instance=ExtResource("10_q7gl3")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 1, 2.125, 1)
+_baseColor = Color(0, 0.364706, 0, 1)
+_startingLocation = Vector3i(-2, 0, 0)
+
+[node name="CharacterToken2" parent="GridMap" instance=ExtResource("10_q7gl3")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -1, 2.125, 1)
+_characterMovementSpeed = 45
+_baseColor = Color(1, 1, 1, 1)
+_startingLocation = Vector3i(-3, 0, 0)
+
+[node name="CharacterToken3" parent="GridMap" instance=ExtResource("10_q7gl3")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -3, 2.125, 1)
+_characterMovementSpeed = 10
+_startingLocation = Vector3i(-4, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.583548, -0.74921, 0.313299, -0.023529, 0.401235, 0.915673, -0.811738, 0.526967, -0.251768, 0, 15.8287, 11.2628)
@@ -38,16 +50,6 @@ projection = 1
 size = 35.0
 near = 5.0
 far = 250.0
-
-[node name="CharacterToken" type="CharacterBody3D" parent="."]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 1, 3.25, 1)
-script = ExtResource("8_m8wyj")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterToken"]
-mesh = SubResource("CapsuleMesh_cyuwt")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterToken"]
-shape = SubResource("CapsuleShape3D_xfsae")
 
 [node name="Selector" type="Node3D" parent="."]
 script = ExtResource("9_8lnrv")

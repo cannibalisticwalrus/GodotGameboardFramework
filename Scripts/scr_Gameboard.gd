@@ -1,27 +1,34 @@
 extends GridMap
 class_name GameBoard;
 
+################################################################
+# The GameBoard Class handles all elements that a traditional  #
+#  board game game board might have.  This includes            #
+#  game sqaures (cells) and which pieces (pawns) are where.    #
+################################################################
+
 var _occupiedGridCells := {};
 
 func isGridCellOccupiedAtLocation(location:Vector3i) -> bool:
 	return _occupiedGridCells.has(location);
-
+	
+func getPawnAtGridSquare(location:Vector3i) -> playerCharacter:
+	return _occupiedGridCells.get(location);
+	
 func updatePawnLocation(oldLocation:Vector3i, newLocation:Vector3i)->void:
-	if($"..".getGameMode()>0):
-		_debugGamemapOccupiedCells()
 	if(!isLocationValid(newLocation)):
 		print("Gameboard: Location does not exist");
 		return;
 	if !isGridCellOccupiedAtLocation(oldLocation):
-		print("Gameboard: There is nothing at the initial location");
+		print("Gameboard: There is no character at the starting location");
 		return;
 	if isGridCellOccupiedAtLocation(newLocation):
 		print("Gameboard: Something is already there");
 		return;
+	
 	_occupiedGridCells[newLocation] = _occupiedGridCells[oldLocation];
 	_occupiedGridCells.erase(oldLocation);
-	if($"..".getGameMode()>0):
-		_debugGamemapOccupiedCells()
+	_occupiedGridCells[newLocation].moveCharacter(getGlobalLocationOfLocalCell(Vector3i(newLocation.x,newLocation.y+1,newLocation.z)));
 	return;
 	
 func addPawnAtLocation(pawnToAdd:Node3D, location:Vector3i)->void:
@@ -32,20 +39,9 @@ func addPawnAtLocation(pawnToAdd:Node3D, location:Vector3i)->void:
 func isLocationValid(location:Vector3i) -> bool:
 	return get_cell_item(location)>=0;
 
-func _debugGamemapOccupiedCells():
-	print("---Gameboard---");
-	print(_occupiedGridCells);
-	print("---------------");
-
 func getGridCellsInRange(distanceFromCenter:int, startingGridLocation:Vector3i)->Array:
-	if($"../../Node3D".getDebugMode()>0):
-		print("\n----Gameboard Class: getGridCellsInRange()----");
-		print("Distance From Center: ", distanceFromCenter);
-		print("Starting Grid Location: ", startingGridLocation);
-		print("-----------------------------------------------");
-	
-	var toBeTestedQueue: = getValidAdjacentGridCells(startingGridLocation);
-	var gridCellsInRange = [];
+	var toBeTestedQueue = getValidAdjacentGridCells(startingGridLocation);
+	var gridCellsInRange := [];
 	
 	while toBeTestedQueue.size() > 0:
 		var currentCell:Vector3i = toBeTestedQueue.pop_front();
@@ -126,8 +122,20 @@ func getDistanceBetweenCells(gridLocation1:Vector3i, gridLocation2:Vector3i)->in
 	distanceBetweenCells = xDistance+yDistance+zDistance;
 	return distanceBetweenCells;
 
+func getGlobalLocationOfLocalCell(cell:Vector3i) -> Vector3:
+	var localLocationAtGridMapCell = self.map_to_local(cell);
+	var globalLocationAtGridMapCell = self.to_global(localLocationAtGridMapCell);
+	return globalLocationAtGridMapCell;
+
 func _ready():
+	for _i in self.get_children():
+		addPawnAtLocation(_i, _i.getStartingLocation());
+		var cellPlusY := Vector3i(_i.getStartingLocation().x, _i.getStartingLocation().y+1, _i.getStartingLocation().z);
+		_i.moveCharacter(getGlobalLocationOfLocalCell(cellPlusY));
 	if($"..".getGameMode()>0):
-		_occupiedGridCells[Vector3i(0,0,0)] = "CHARACTER1";
-		_debugGamemapOccupiedCells()
+		_debugGamemapOccupiedCells();
 		
+func _debugGamemapOccupiedCells():
+	print("---Gameboard---");
+	print(_occupiedGridCells);
+	print("---------------");

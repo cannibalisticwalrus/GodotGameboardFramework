@@ -22,26 +22,35 @@ func _updateSelectorLocation()->void:
 		_currentHighlightedCell = _getGridMapCellAtCursor();
 
 func _getGridMapCellAtCursor() -> Vector3i:
-	return gridMap.local_to_map(player.cursorLocation3d);
+	if(gridMap.get_cell_item(gridMap.local_to_map(player.cursorLocation3d)) > 0):
+		return gridMap.local_to_map(player.cursorLocation3d);
+	else:
+		var gridmapcell =  gridMap.local_to_map(player.cursorLocation3d);
+		gridmapcell.y-=1;
+		return gridmapcell;
 
 func selectAtCurrentLocation()->void:
+	#Debugging
 	if($"../../../Node3D".getDebugMode()>0):
-		print("Selector: Selected ", _currentHighlightedCell);	
-		
+		print("Selector: Selected ", _getGridMapCellAtCursor());	
+	
+	#If there is no current selection...
 	if(!_isCurrentSelection):
 		#Save the current highlightedCell into currentSelectedCell
 		currentSelectionLocation = _currentHighlightedCell;
 		#Set currentSelection to true
 		_isCurrentSelection = true;
-		#Temporary for testing potential movement squares
-		displayPawnAccessableCells(5, currentSelectionLocation);
+		#If the thing at that location a character...
+		if(gridMap.isGridCellOccupiedAtLocation(currentSelectionLocation)):
+			displayPawnAccessableCells(gridMap.getPawnAtGridSquare(currentSelectionLocation).getCharacterSpeed(), currentSelectionLocation);
 		#Be done.  We dont want to waste any more resources
 		return;
 		
 	#If there is a current selection, unlock the cursor if user clicked off it
 	if(_isCurrentSelection):
 		#If there is something at the selected cell and where you clicked is in movement range
-		if(gridMap.isGridCellOccupiedAtLocation(currentSelectionLocation)&&_getGridMapCellAtCursor() in gridMap.getGridCellsInRange(5, currentSelectionLocation)):
+		if(gridMap.isGridCellOccupiedAtLocation(currentSelectionLocation)&&
+		_getGridMapCellAtCursor() in gridMap.getGridCellsInRange(gridMap.getPawnAtGridSquare(currentSelectionLocation).getCharacterSpeed(), currentSelectionLocation)):
 			#Move the selected pawn
 			gridMap.updatePawnLocation(currentSelectionLocation, _getGridMapCellAtCursor());
 		

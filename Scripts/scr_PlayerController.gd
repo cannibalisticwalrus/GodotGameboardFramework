@@ -1,7 +1,7 @@
 extends Node3D
 class_name PlayerController;
 
-@export var cursorLocation3d:Vector3 = (Vector3(0,0,0));
+var cursorLocation3d:Vector3 = (Vector3(0,0,0));
 const SCROLL_SPEED = 15;
 var up:bool = false;
 var down:bool = false;
