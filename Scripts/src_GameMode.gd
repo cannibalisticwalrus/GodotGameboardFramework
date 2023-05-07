@@ -1,4 +1,4 @@
-extends Node3D
+extends Node3D;
 class_name GameMode;
 
 ###########################################################
@@ -9,7 +9,7 @@ class_name GameMode;
 
 var _gameMode:int = 1; #Gamemode 0 - Level Designer; Gamemode 1 - Game Master; Gamemode 2 - Player
 var _debugMode:int = 1; #0->OFF:1->LightDebugging:2->HeavyDebugging
-	
+
 func getGameMode():
 	return _gameMode;
 

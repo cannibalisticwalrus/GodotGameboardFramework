@@ -1,4 +1,4 @@
-extends GridMap
+extends GridMap;
 class_name GameBoard;
 
 ################################################################
@@ -7,29 +7,45 @@ class_name GameBoard;
 #  game sqaures (cells) and which pieces (pawns) are where.    #
 ################################################################
 
+var _canPawnsShareLocation := false;
 var _occupiedGridCells := {};
+
+func _ready():
+	for _i in self.get_children():
+		addPawnAtLocation(_i, _i.getStartingLocation());
+		var cellPlusY := Vector3i(_i.getStartingLocation().x, _i.getStartingLocation().y+1, _i.getStartingLocation().z);
+		_i.moveCharacter(getGlobalLocationOfLocalCell(cellPlusY));
+	if($"..".getGameMode()>0):
+		_debugGamemapOccupiedCells();
 
 func isGridCellOccupiedAtLocation(location:Vector3i) -> bool:
 	return _occupiedGridCells.has(location);
 	
-func getPawnAtGridSquare(location:Vector3i) -> playerCharacter:
+func getPawnAtGridSquare(location:Vector3i) -> Pawn:
 	return _occupiedGridCells.get(location);
 	
 func updatePawnLocation(oldLocation:Vector3i, newLocation:Vector3i)->void:
-	if(!isLocationValid(newLocation)):
-		print("Gameboard: Location does not exist");
-		return;
-	if !isGridCellOccupiedAtLocation(oldLocation):
-		print("Gameboard: There is no character at the starting location");
-		return;
-	if isGridCellOccupiedAtLocation(newLocation):
-		print("Gameboard: Something is already there");
+	if(!canPawnMoveToLocation(oldLocation, newLocation)):
 		return;
 	
 	_occupiedGridCells[newLocation] = _occupiedGridCells[oldLocation];
 	_occupiedGridCells.erase(oldLocation);
-	_occupiedGridCells[newLocation].moveCharacter(getGlobalLocationOfLocalCell(Vector3i(newLocation.x,newLocation.y+1,newLocation.z)));
+	var spawnCandidateSurfaceGlobalCoordinates := getGlobalLocationOfLocalCell(Vector3i(newLocation.x,newLocation.y,newLocation.z));
+	spawnCandidateSurfaceGlobalCoordinates.y+=(self.cell_size.y/2);
+	_occupiedGridCells[newLocation].moveCharacter(spawnCandidateSurfaceGlobalCoordinates);
 	return;
+
+func canPawnMoveToLocation(oldLocation:Vector3i, newLocation:Vector3i) -> bool:
+	if(!isLocationValid(newLocation)):
+		print("Gameboard: Location does not exist");
+		return false;
+	if !isGridCellOccupiedAtLocation(oldLocation):
+		print("Gameboarhwod: There is no character at the starting location");
+		return false;
+	if isGridCellOccupiedAtLocation(newLocation) && !_canPawnsShareLocation:
+		print("Gameboard: Something is already there");
+		return false;
+	return true;
 	
 func addPawnAtLocation(pawnToAdd:Node3D, location:Vector3i)->void:
 	if(isLocationValid(location) && !isGridCellOccupiedAtLocation(location)):
@@ -125,16 +141,9 @@ func getDistanceBetweenCells(gridLocation1:Vector3i, gridLocation2:Vector3i)->in
 func getGlobalLocationOfLocalCell(cell:Vector3i) -> Vector3:
 	var localLocationAtGridMapCell = self.map_to_local(cell);
 	var globalLocationAtGridMapCell = self.to_global(localLocationAtGridMapCell);
+	
 	return globalLocationAtGridMapCell;
 
-func _ready():
-	for _i in self.get_children():
-		addPawnAtLocation(_i, _i.getStartingLocation());
-		var cellPlusY := Vector3i(_i.getStartingLocation().x, _i.getStartingLocation().y+1, _i.getStartingLocation().z);
-		_i.moveCharacter(getGlobalLocationOfLocalCell(cellPlusY));
-	if($"..".getGameMode()>0):
-		_debugGamemapOccupiedCells();
-		
 func _debugGamemapOccupiedCells():
 	print("---Gameboard---");
 	print(_occupiedGridCells);
