@@ -1,2 +1,4 @@
-#Godot Gameboard Framework
+# Godot Gameboard Framework
 Hey.  I spent sometime working on a TTRPG Combat Simulator and realized that a lot of what I am working on is applicable to all types of Tabletop Games from Monopoly to DnD.  Really anything that has you move on a Grid, space-by-space, (Think any boardgame).  As a result I am re-releasing this project as a framework.  Feel free to use this for any or all of your projects for any use (commercial or personal), just link back to this project so I can see what you are working on!
+
+Documentation is coming soon...I promise.  For now, the code I have added is well named and commented so it can provide a good start.  The Demo project (the current default) is also a great place to start figuring out what is currently possible with the framework (and no additional custom code).
