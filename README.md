@@ -1,7 +1,4 @@
-# TTRPGCombatSim
-A small, highly modular RPG simulator initially designed to replace my use of excel to run TTRPG combat.  
+# Godot Gameboard Framework
+Hey.  I spent sometime working on a TTRPG Combat Simulator and realized that a lot of what I am working on is applicable to all types of Tabletop Games from Monopoly to DnD.  Really anything that has you move on a Grid, space-by-space, (Think any boardgame).  As a result I am re-releasing this project as a framework.  Feel free to use this for any or all of your projects for any use (commercial or personal), just link back to this project so I can see what you are working on!
 
-If you are interested in Forking the repo and using it for your own devices, go ahead.  If you do, consider donating and or giving me some credit and linking this repo.  
-
-
-For those that don't know: GDScript is a Python-like scripting language used to develop Games in Godot.  It is capable of a lot, most notably acting as both a functional or object oriented language if/when desired.  
+Documentation is coming soon...I promise.  For now, the code I have added is well named and commented so it can provide a good start.  The Demo project (the current default) is also a great place to start figuring out what is currently possible with the framework (and no additional custom code).
