@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvfm8jhgt2802"]
+
+[ext_resource type="ArrayMesh" uid="uid://bl8tkfghjhxfq" path="res://Assets/Meshes/sm_CubeSelector.res" id="1_mr77g"]
+[ext_resource type="Material" uid="uid://bdtxrtrheu3f3" path="res://Assets/Materials/M_GamplaySelector.tres" id="2_qoqt0"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_mr77g")
+surface_material_override/0 = ExtResource("2_qoqt0")
+surface_material_override/1 = ExtResource("2_qoqt0")
