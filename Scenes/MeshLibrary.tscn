@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=10 format=3 uid="uid://dgk5w7i1e0gx5"]
 
 [ext_resource type="ArrayMesh" uid="uid://dj11f2psoqlle" path="res://Assets/Meshes/sm_Cube.res" id="1_gmcbl"]
 [ext_resource type="ArrayMesh" uid="uid://c3sfe5mhotgem" path="res://Assets/Meshes/sm_CubeHalf.res" id="2_bm1ap"]

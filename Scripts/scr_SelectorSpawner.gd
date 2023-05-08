@@ -1,5 +1,0 @@
-extends MeshInstance3D
-
-
-
-

@@ -1,5 +1,12 @@
-extends Node3D
+extends Node3D;
 class_name PlayerController;
+
+###########################################################
+# This class holds information and functions regarding    #
+# the player.  This is not to be confused with the pawns  #
+# the player class controlls the camera, movement and     #
+# input actions.                                          #
+###########################################################
 
 var cursorLocation3d:Vector3 = (Vector3(0,0,0));
 const SCROLL_SPEED = 15;
