@@ -12,6 +12,7 @@ class_name Pawn;
 @export var _characterMovementSpeed:int = 5;
 @export var _baseColor:Color = Color(0,0,0);
 @export var _startingLocation:Vector3i = Vector3i(0,0,0);
+@export var _staticSpriteTexture:Texture;
 
 @onready var _owningGameboard:GridMap = $"../GridMap";
 
@@ -21,7 +22,10 @@ var _isMoving:bool = false;
 
 func _ready():
 	_dynamicMaterial.albedo_color = _baseColor;
+	_dynamicMaterial.specular_mode = _dynamicMaterial.SPECULAR_TOON;
+	_dynamicMaterial.diffuse_mode = _dynamicMaterial.DIFFUSE_TOON;
 	$MeshInstance3D.set_surface_override_material(0, _dynamicMaterial);
+	$Sprite3D.texture = _staticSpriteTexture;
 
 func getCharacterSpeed():
 	return _characterMovementSpeed;
